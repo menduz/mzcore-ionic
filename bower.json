@@ -14,7 +14,8 @@
         "ionic"
     ],
     "devDependencies": {
-        "mzcore": "*"
+        "mzcore": "*",
+        "mzcore-uikit": "*"
     },
     "homepage": "https://github.com/menduz/mzcore-ionic",
     "moduleType": [

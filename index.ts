@@ -1,5 +1,7 @@
 mz.loadCss(module.getPath('./css/ionic.min.css'));
 
+import * as mzc from 'bower_components/mzcore-uikit/index';
+
 export function activatePlugin() { };
 
 @mz.Widget.ConfigureEmptyTag
@@ -19,9 +21,20 @@ export class IonInputBase extends mz.widgets.MzInput {
     }
 
     value_changed(val) {
-        if ((this.input.rootNode as HTMLInputElement).value != Object.prototype.toString.call(val)) {
-            (this.input.rootNode as HTMLInputElement).value = val;
+        let valStr = val;
+        
+        if(val == undefined) {
+            val = null;
         }
+        
+        if(val == null) 
+            valStr = '';
+        
+        if ((this.input.rootNode as HTMLInputElement).value != valStr) {
+            (this.input.rootNode as HTMLInputElement).value = valStr;
+        }
+        
+        return val;
     }
 };
 
@@ -178,9 +191,20 @@ export class IonItemToggle extends IonInputBase {
     }
 };
 
-/*
-@mz.Widget.RegisterComponent("ion-tabs")
-export class IonTabs extends mz.widgets.MzTaber {
+
+@IonTabs.RegisterComponent("ion-tabs")
+@IonTabs.Template(`
+<div class="scroll-content">
+    <mz-repeat list="{this.tabs}" tag="div" class="tabs tabs-icon-{this.iconStyle} tabs-{mood}">
+        <a role="presentation" class="{active: scope.isVisible()} tab-item" onclick="{this.tabClicked}">
+        	<i class="icon {scope.icon}" visible="{scope.icon}"></i>
+			{this.labelVisible ? scope.label : null}
+        </a>
+    </mz-repeat>
+    <div class="{has-tabs: !this.top, has-tabs-top: this.top } scroll-content" />
+</div>
+`, '.scroll-content')
+export class IonTabs extends mzc.MzTaber {
     @mz.MVCObject.proxy//Named('icon-style')
     iconStyle: string;
 
@@ -201,23 +225,12 @@ export class IonTabs extends mz.widgets.MzTaber {
             attr['iconStyle'] = 'top';
 
         super(rootNode, attr, [], a, b, scope);
-        this.startComponent
-            `
-<div class="scroll-content">
-    <mz-repeat list="{this.tabs}" tag="div" class="tabs tabs-icon-{this.iconStyle} tabs-{mood}">
-        <a role="presentation" class="{active: scope.tab_visible} tab-item" visible="{scope.componentVisible}" onclick="{this.tabClicked}">
-        	<i class="icon {scope.icon}" visible="{scope.icon}"></i>
-			{this.labelVisible ? scope.label : null}
-        </a>
-    </mz-repeat>
-    <div class="{has-tabs: !this.top, has-tabs-top: this.top } scroll-content" />
-</div>`
-        this.setContentSelector('.scroll-content');
+
 
         children.forEach(child => {
             if (child instanceof IonTab) {
                 this.tabs.push(child);
-                child.panel.set('switcher', this.switcher);
+                //child.panel.set('switcher', this.switcher);
                 child.parent = this;
                 child.on('valueChanged', () => this.tabs.update(child));
             } else {
@@ -265,7 +278,7 @@ export class IonTab extends mzc.MzTab {
     label: string;
 };
 
-*/
+
 
 @mz.Widget.RegisterComponent("ion-content")
 @mz.Widget.Template(`<div class="scroll"></div>`, ':root')
