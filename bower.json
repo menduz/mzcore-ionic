@@ -13,7 +13,7 @@
         "redux",
         "ionic"
     ],
-    "devDependencies": {
+    "dependencies": {
         "mzcore": "*",
         "mzcore-uikit": "*"
     },

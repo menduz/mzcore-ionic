@@ -101,6 +101,22 @@ export class IonText extends IonInputBase {
 </label>`)
 export class IonPassword extends IonText { }
 
+@mz.Widget.RegisterComponent("ion-date")
+@mz.Widget.Template(`
+<label class="item item-input" onclick="{this.focus}">
+    <span class="input-label">{label}</span>
+    <input type="date" name="input" placeholder="{placeholder}" disabled="{this.disabled}" readonly="{readonly}"  onchange="{this.changed}" onkeyup="{this.keyup}" />
+</label>`)
+export class IonDate extends IonText { }
+
+@mz.Widget.RegisterComponent("ion-time")
+@mz.Widget.Template(`
+<label class="item item-input" onclick="{this.focus}">
+    <span class="input-label">{label}</span>
+    <input type="date" name="input" placeholder="{placeholder}" disabled="{this.disabled}" readonly="{readonly}"  onchange="{this.changed}" onkeyup="{this.keyup}" />
+</label>`)
+export class IonTime extends IonText { }
+
 @mz.Widget.RegisterComponent("ion-toggle")
 @mz.Widget.Template(`
 <label class="toggle">
